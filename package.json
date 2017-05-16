@@ -1,7 +1,7 @@
 {
   "name": "querymon",
   "version": "1.0.0",
-  "description": "Parse and pass URL queries to MongoDB query",
+  "description": "Geolocation library",
   "main": "index.js",
   "scripts": {
     "lint": "eslint source",
