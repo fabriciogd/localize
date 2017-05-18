@@ -1,9 +1,11 @@
-import request from 'request-promise';
+import Provider from './provider';
 import _ from 'lodash'
 
-export default class Google {
+export default class Google extends Provider {
 
     constructor(options) {
+        super()
+
         this.options = options
         this.url = "https://maps.googleapis.com/maps/api/geocode/json"
     }
@@ -11,49 +13,21 @@ export default class Google {
     geocode (location){
         let url = this.url,
             qs = _.extend({sensor: false, address: location}, this.options || {})
-
-        return new Promise(function (resolve, reject) {
-
-            var options = {
-                url: url,
-                qs: qs,
-                transform: function (body) { return JSON.parse(body) }
-            };
-
-            request(options).then((result) => {
-
-                resolve(result);
-
-            }).catch((err) => {
-
-                reject(err);
-
-            });
+            
+        return this.request({
+            url: url,
+            qs: qs
         })
     }
 
     reverse (lat, lng){
         let url = this.url,
             latlng = `${lat},${lng}` ,
-            qs = _.extend({sensor: false, latlng: latlng}, this.options || {})
+            qs = _.extend({sensor: false, latlng: latlng, location_type: 'ROOFTOP', result_type: 'street_address'}, this.options || {})
 
-         return new Promise(function (resolve, reject) {
-
-            var options = {
-                url: url,
-                qs: qs,
-                transform: function (body) { return JSON.parse(body) }
-            };
-
-            request(options).then((result) => {
-
-                resolve(result);
-
-            }).catch((err) => {
-
-                reject(err);
-
-            });
+        return this.request({
+            url: url,
+            qs: qs
         })
     }
 }

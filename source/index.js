@@ -11,7 +11,6 @@ import _ from 'lodash'
  * @class Localize
  */
 class Localize {
-    version = '1.0.0'
 
     /**
      * Creates an instance of Localize.
@@ -39,6 +38,8 @@ class Localize {
         }
 
         this.provider = require("./providers/" + name)(this.options);
+
+        return this;
     }
 
     /**
@@ -75,6 +76,6 @@ class Localize {
     }
 }
 
-module.exports = (options ) => {
+module.exports = (options) => {
     return new Localize(options)
 }
